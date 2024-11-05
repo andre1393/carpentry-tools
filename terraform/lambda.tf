@@ -1,7 +1,3 @@
-data "aws_ecr_repository" "carpentry_tools_repo" {
-  name = "carpentry-tools"
-}
-
 resource "aws_lambda_function" "carpentry_tools_lambda" {
   function_name = "carpentry-tools-lambda"
   package_type  = "Image"
