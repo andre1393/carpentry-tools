@@ -37,7 +37,7 @@ jobs:
       - name: Build Docker image
         env:
           GOOGLE_CREDS: ${{ secrets.GOOGLE_ACCOUNT_SERVICE_CREDS }}
-          GIT_COMMIT: $(git rev-parse --short "$GITHUB_SHA")
+          GIT_COMMIT: $(git rev-parse --short HEAD)
         run: |
           mkdir creds
           echo $GOOGLE_CREDS >> creds/carpentry-tools-440018-233a8c3c2ecd.json
@@ -96,5 +96,5 @@ jobs:
       - name: Terraform Apply
         #if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         env:
-          GIT_COMMIT: $(git rev-parse --short "$GITHUB_SHA")
+          GIT_COMMIT: $(git rev-parse --short HEAD)
         run: terraform apply -var "image_tag=$GIT_COMMIT" -auto-approve -input=false

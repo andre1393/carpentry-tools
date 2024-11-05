@@ -11,9 +11,6 @@ resource "aws_lambda_function" "carpentry_tools_lambda" {
       LOG_LEVEL                   = var.log_level
     }
   }
-  lifecycle {
-    ignore_changes = [image_uri]
-  }
 }
 
 resource "aws_iam_role" "lambda_execution_role" {
