@@ -1,5 +1,5 @@
 output "ecr_repository_url" {
-  value = module.ecr.repository_url
+  value = aws_ecr_repository.carpentry_tools.repository_url
 }
 
 output "api_invoke_url" {
