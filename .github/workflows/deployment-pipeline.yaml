@@ -37,11 +37,11 @@ jobs:
       - name: Build Docker image
         env:
           GOOGLE_CREDS: ${{ secrets.GOOGLE_ACCOUNT_SERVICE_CREDS }}
-          IMAGE_TAG: $GITHUB_SHA
+          GIT_COMMIT: $(git rev-parse --short "$GITHUB_SHA")
         run: |
           mkdir creds
           echo $GOOGLE_CREDS >> creds/carpentry-tools-440018-233a8c3c2ecd.json
-          docker build --platform linux/amd64 --build-arg GIT_COMMIT=$GITHUB_SHA -t ${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/carpentry-tools:$IMAGE_TAG .
+          docker build --platform linux/amd64 --build-arg GIT_COMMIT=$GIT_COMMIT -t ${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/carpentry-tools:${GIT_COMMIT} .
       - name: Push Docker image to ECR
         run: |
           docker push ${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/carpentry-tools:latest
@@ -53,6 +53,7 @@ jobs:
         shell: bash
         working-directory: terraform
     environment: deployment-environment
+    needs: docker
     steps:
       - name: Checkout the repository to the runner
         uses: actions/checkout@v2
@@ -95,5 +96,5 @@ jobs:
       - name: Terraform Apply
         #if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         env:
-          GIT_COMMIT: $GITHUB_SHA
+          GIT_COMMIT: $(git rev-parse --short "$GITHUB_SHA")
         run: terraform apply -var "image_tag=$GIT_COMMIT" -auto-approve -input=false
