@@ -28,6 +28,29 @@ resource "aws_ecr_repository" "carpentry_tools" {
   }
 }
 
+resource "aws_ecr_lifecycle_policy" "carpentry_tools" {
+  repository = aws_ecr_repository.carpentry_tools.name
+
+  policy = <<EOF
+{
+    "rules": [
+        {
+            "rulePriority": 1,
+            "description": "Keep last 2 images",
+            "selection": {
+                "tagStatus": "any",
+                "countType": "imageCountMoreThan",
+                "countNumber": 2
+            },
+            "action": {
+                "type": "expire"
+            }
+        }
+    ]
+}
+EOF
+}
+
 output "repository_url" {
   value = aws_ecr_repository.carpentry_tools.repository_url
 }
