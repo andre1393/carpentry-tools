@@ -5,10 +5,10 @@ terraform {
     }
   }
 
- backend "s3" {
-   region = "us-east-1"
-   key    = "terraform/terraform.tfstate"
-   bucket = "carpentry-tools"
+  backend "s3" {
+    region = "us-east-1"
+    key    = "terraform/terraform.tfstate"
+    bucket = "carpentry-tools"
   }
 }
 
@@ -17,8 +17,8 @@ provider "aws" {
 }
 
 module "ecr" {
-  source               = "terraform-aws-modules/ecr/aws"
-  repository_name      = "carpentry-tools"
+  source          = "terraform-aws-modules/ecr/aws"
+  repository_name = "carpentry-tools"
   repository_lifecycle_policy = jsonencode({
     rules = [
       {
