@@ -89,4 +89,4 @@ jobs:
 
       - name: Terraform Apply
         #if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform state list | xargs -n 1 terraform state rm
+        run: terraform apply -auto-approve -input=false
