@@ -48,7 +48,6 @@ jobs:
         shell: bash
         working-directory: terraform
     environment: deployment-environment
-    needs: docker
     steps:
       - name: Checkout the repository to the runner
         uses: actions/checkout@v2
