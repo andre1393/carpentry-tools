@@ -19,4 +19,4 @@ RUN poetry config virtualenvs.create false && \
 
 COPY . .
 
-CMD ["app.handler"]
+CMD ["tools.api.app.handler"]
