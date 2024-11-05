@@ -16,7 +16,7 @@ provider "aws" {
   region = var.aws_region
 }
 
-module "ecr" {
+module "aws_ecr_repository" {
   source               = "terraform-aws-modules/ecr/aws"
   repository_name      = "carpentry-tools"
   image_tag_mutability = "MUTABLE"
