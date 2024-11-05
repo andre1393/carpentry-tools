@@ -4,7 +4,7 @@ variable "aws_region" {
 }
 
 variable "google_service_account_file" {
-  default     = "/var/task/carpentry-tools-440018-233a8c3c2ecd.json"
+  default     = "/var/task/creds/carpentry-tools-440018-233a8c3c2ecd.json"
   description = "path to google service account credentials file"
 }
 
