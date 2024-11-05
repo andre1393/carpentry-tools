@@ -21,7 +21,6 @@ jobs:
     name: "Docker build/deploy image"
     runs-on: ubuntu-latest
     environment: deployment-environment
-    needs: terraform
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -54,6 +53,7 @@ jobs:
         shell: bash
         working-directory: terraform
     environment: deployment-environment
+    needs: docker
     steps:
       - name: Checkout the repository to the runner
         uses: actions/checkout@v2
