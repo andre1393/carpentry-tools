@@ -17,8 +17,9 @@ provider "aws" {
 }
 
 module "ecr" {
-  source          = "terraform-aws-modules/ecr/aws"
-  repository_name = "carpentry-tools"
+  source               = "terraform-aws-modules/ecr/aws"
+  repository_name      = "carpentry-tools"
+  image_tag_mutability = "MUTABLE"
   repository_lifecycle_policy = jsonencode({
     rules = [
       {
