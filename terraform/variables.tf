@@ -12,3 +12,8 @@ variable "log_level" {
   default     = "INFO"
   description = "application log level"
 }
+
+variable "image_tag" {
+  default     = "latest"
+  description = "image tag"
+}
