@@ -1,7 +1,7 @@
 resource "aws_lambda_function" "carpentry_tools_lambda" {
   function_name = "carpentry-tools-lambda"
   package_type  = "Image"
-  image_uri     = "${aws_ecr_repository.carpentry_tools.repository_url}:latest"
+  image_uri     = "${aws_ecr_repository.carpentry_tools.repository_url}:{var.image_tag}"
   role          = aws_iam_role.lambda_execution_role.arn
   memory_size   = 128
   timeout       = 30
