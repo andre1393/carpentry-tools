@@ -43,7 +43,7 @@ jobs:
           GOOGLE_CREDS: ${{ secrets.GOOGLE_ACCOUNT_SERVICE_CREDS }}
         run: |
           mkdir creds
-          echo $GOOGLE_CREDS >> creds/carpentry-tools-440018-233a8c3c2ecd.json
+          echo $GOOGLE_CREDS | base64 -di > creds/carpentry-tools-440018-233a8c3c2ecd.json
           docker build --platform linux/amd64 --build-arg GIT_COMMIT=$GIT_COMMIT -t ${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/carpentry-tools:$GIT_COMMIT .
       - name: Push Docker image to ECR
         run: |
