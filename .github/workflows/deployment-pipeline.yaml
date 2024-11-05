@@ -20,6 +20,7 @@ jobs:
   docker:
     name: "Docker build/deploy image"
     runs-on: ubuntu-latest
+    environment: deployment-environment
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
