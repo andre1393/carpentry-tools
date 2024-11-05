@@ -19,4 +19,7 @@ RUN poetry config virtualenvs.create false && \
 
 COPY . .
 
+ARG GIT_COMMIT
+ENV GIT_COMMIT=${GIT_COMMIT}
+
 CMD ["tools.api.app.handler"]

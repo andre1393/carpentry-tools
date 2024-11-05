@@ -1,9 +1,12 @@
+import os
+from mangum import Mangum
 from fastapi import FastAPI, HTTPException
 import traceback
+
 from tools.quote_generator import generate_quote
 from tools.logger_config import logger
 from tools.api.models import RequestParams
-from mangum import Mangum
+
 
 app = FastAPI(
     title="Document processing API",
@@ -25,6 +28,11 @@ async def generate_quote_endpoint(params: RequestParams):
 @app.get("/health")
 def health():
     return {"message": "Welcome to the Document Processing API!"}
+
+
+@app.get("/version")
+def version():
+    return {"git_commit": os.getenv("GIT_COMMIT")}
 
 
 handler = Mangum(app)
