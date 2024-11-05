@@ -34,14 +34,17 @@ jobs:
           aws-region: us-east-1
       - name: Log in to Amazon ECR
         uses: aws-actions/amazon-ecr-login@v1
+      - name: Set GIT_COMMIT variable
+        run: |
+          GIT_COMMIT=$(echo $GITHUB_SHA | cut -c1-7)
+          echo "GIT_COMMIT=$GIT_COMMIT" >> $GITHUB_ENV
       - name: Build Docker image
         env:
           GOOGLE_CREDS: ${{ secrets.GOOGLE_ACCOUNT_SERVICE_CREDS }}
-          GIT_COMMIT: $(git rev-parse --short HEAD)
         run: |
           mkdir creds
           echo $GOOGLE_CREDS >> creds/carpentry-tools-440018-233a8c3c2ecd.json
-          docker build --platform linux/amd64 --build-arg GIT_COMMIT=$GIT_COMMIT -t ${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/carpentry-tools:${GIT_COMMIT} .
+          docker build --platform linux/amd64 --build-arg GIT_COMMIT=$GIT_COMMIT -t ${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/carpentry-tools:$GIT_COMMIT .
       - name: Push Docker image to ECR
         run: |
           docker push ${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/carpentry-tools:latest
@@ -92,9 +95,10 @@ jobs:
         id: plan
         if: github.event_name == 'pull_request'
         run: terraform plan -no-color -input=false
-
+      - name: Set GIT_COMMIT variable
+        run: |
+          GIT_COMMIT=$(echo $GITHUB_SHA | cut -c1-7)
+          echo "GIT_COMMIT=$GIT_COMMIT" >> $GITHUB_ENV
       - name: Terraform Apply
         #if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        env:
-          GIT_COMMIT: $(git rev-parse --short HEAD)
         run: terraform apply -var "image_tag=$GIT_COMMIT" -auto-approve -input=false
