@@ -47,7 +47,7 @@ jobs:
           docker build --platform linux/amd64 --build-arg GIT_COMMIT=$GIT_COMMIT -t ${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/carpentry-tools:$GIT_COMMIT .
       - name: Push Docker image to ECR
         run: |
-          docker push ${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/carpentry-tools:latest
+          docker push ${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.us-east-1.amazonaws.com/carpentry-tools:$GIT_COMMIT
   terraform:
     name: "Terraform Infrastructure Change Management"
     runs-on: ubuntu-latest
