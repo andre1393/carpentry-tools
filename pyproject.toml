@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "carpentry-tools"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+jinja2 = "^3.1.4"
+google-auth = "^2.35.0"
+google-auth-oauthlib = "^1.2.1"
+google-auth-httplib2 = "^0.2.0"
+google-api-python-client = "^2.149.0"
+reportlab = "^4.2.5"
+websockets = "10.4"
+weasyprint = "^62.3"
+python-dotenv = "^1.0.1"
+fastapi = "^0.115.4"
+uvicorn = "^0.32.0"
+pydantic = "^2.9.2"
+mangum = "^0.19.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+tools = "tools:app"
